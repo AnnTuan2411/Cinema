@@ -1,0 +1,250 @@
+﻿@using Microsoft.AspNetCore.Http;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Cinema</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Cinema.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://ajax.goog1eapis.com/ajax/1ibs/jquery/3.5.1/jquery.min.js"></script>
+    <!--Link mới -->
+
+    <link href="~/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/css/contactstyle.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/css/faqstyle.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/css/single.css" rel="stylesheet" type='text/css' />
+    <link href="~/css/medile.css" rel="stylesheet" type='text/css' />
+    <!-- banner-slider -->
+    <link href="~/css/jquery.slidey.min.css" rel="stylesheet" />
+    <!-- //banner-slider -->
+    <!-- pop-up -->
+    <link href="~/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- font-awesome icons -->
+
+    <link rel="stylesheet" href="~/css/font-awesome.min.css" />
+    <!-- //font-awesome icons -->
+    <!-- js -->
+    <script src="~/js/jquery-2.1.4.min.js"></script>
+    <!-- //js -->
+    <!-- banner-bottom-plugin -->
+    <link href="~/css/owl.carousel.css" rel="stylesheet" type="text/css" media="all" />
+    <script src="~/js/owl.carousel.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+
+                autoPlay: 3000, //Set AutoPlay to 3 seconds
+
+                items: 5,
+                itemsDesktop: [640, 4],
+                itemsDesktopSmall: [414, 3]
+
+            });
+
+        });
+    </script>
+    <!-- //banner-bottom-plugin -->
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700italic,700,400italic,300italic,300' rel='stylesheet' type='text/css'>
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="~/js/owl.carousel.js"></script>
+    <script type="text/javascript" src="~/js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
+            });
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+    <!--Link mới -->
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid" style="height:60px">
+                <a class="navbar-brand" style="padding-top:0px" asp-area="" asp-controller="Home" asp-action="Index"><img src="~/Image/logocinema.png" /></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div>
+
+                    <ul class="navbar-nav flex-grow-1">
+
+                        @if (ViewBag.Session == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index">Phim mới ra mắt</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="MovieShow" asp-action="Index">Lịch chiếu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Login">Đăng nhập</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Register">Đăng Ký</a>
+                            </li>
+                        }
+                        else
+                        {
+                            if (ViewBag.SessionRoleID == 1)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Trang chủ</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Movie" asp-action="Index">Phim mới ra mắt</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="MovieShow" asp-action="Index">Lịch chiếu</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="Edit">@ViewBag.Session</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout">Đăng xuất</a>
+                                </li>
+                            }
+                            else if (ViewBag.SessionRoleID == 5)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="OrderTicket" asp-action="GetTiket">Soát vé</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-route-id="@ViewBag.SessionID" asp-controller="EmployeeCalendar" asp-action="ViewCalendar">Xem lịch làm việc của 1 nhân viên</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-route-id="@ViewBag.SessionID" asp-controller="Memberships" asp-action="Index">@ViewBag.Session</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout">Đăng xuất</a>
+                                </li>
+                            }
+                            else if (ViewBag.SessionRoleID == 2)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">@ViewBag.Session</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Accounts" asp-action="Logout">Đăng xuất</a>
+                                </li>
+                            }
+
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        <main role="main" class="pb-3">
+            @RenderBody()
+            
+        </main>
+    </div>
+
+    <footer class="text-white text-center text-lg-start" style="background-color: #23242a;">
+        <!-- Grid container -->
+        <div class="container p-4">
+            <!--Grid row-->
+            <div class="row mt-4">
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">About company</h5>
+
+                    <p>
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
+                        voluptatum deleniti atque corrupti.
+                    </p>
+
+                    <p>
+                        Blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas
+                        molestias.
+                    </p>
+
+                    <div class="mt-4">
+                        <!-- Facebook -->
+                        <a type="button" class="btn btn-floating btn-dark btn-lg"><i class="fab fa-facebook-f"></i></a>
+                        <!-- Instagram -->
+                        <a type="button" class="btn btn-floating btn-dark btn-lg"><i class="fa-brands fa-instagram"></i></a>
+                        <!-- Twitter -->
+                        <a type="button" class="btn btn-floating btn-dark btn-lg"><i class="fab fa-twitter"></i></a>
+                        <!-- Google + -->
+                        <a type="button" class="btn btn-floating btn-dark btn-lg"><i class="fab fa-google-plus-g"></i></a>
+                        <!-- Linkedin -->
+                    </div>
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4 pb-1">Search something</h5>
+
+                    <div class="form-outline form-white mb-4">
+                        <input type="text" id="formControlLg" class="form-control form-control-lg" style="margin-left:0px; width:8cm;">
+                        <label class="form-label" for="formControlLg" style="margin-left: 0px;">Search</label>
+                        <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 48.8px;"></div><div class="form-notch-trailing"></div></div>
+                    </div>
+
+                    <ul class="fa-ul" style="margin-left: 1.65em;">
+                        <li class="mb-3">
+                            <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">Đà Nẵng, Quận Hải Châu, Việt Nam</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">mandan@gmail.com</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 01 234 567 88</span>
+                        </li>
+                        <li class="mb-3">
+                            <span class="fa-li"><i class="fas fa-print"></i></span><span class="ms-2">+ 01 234 567 89</span>
+                        </li>
+                    </ul>
+                </div>
+                <!--Grid column-->
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                    <h5 class="text-uppercase mb-4">Opening hours</h5>
+
+                    <table class="table text-center text-white">
+                        <tbody class="font-weight-normal">
+                            <tr>
+                                <td>Mon - Sat:</td>
+                                <td>9am - 22pm</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <a href="#"><img src="~/Image/logocinema.png" class="imagefooter" /></a>
+                </div>
+                <!--Grid column-->
+            </div>
+            <!--Grid row-->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        @*         <div class="text-center p-3" style="background-color:#23242a; height:20%;">
+        © 2020 Copyright:
+        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+        </div> *@
+        <!-- Copyright -->
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!--Scrip mới-->
+    <!--Scrip mới-->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

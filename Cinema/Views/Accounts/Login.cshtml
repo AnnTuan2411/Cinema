@@ -1,0 +1,98 @@
+﻿@model Cinema.Models.Account
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    h3 {
+        margin-top: 10px;
+        color: white;
+    }
+
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #8e640a;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+
+    .form-control {
+        width: 10cm;
+        border-radius: 18px;
+        margin-left: 2.15cm;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .otherlink {
+        margin-left: 3cm;
+        width: 8cm;
+        display: flex;
+        justify-content: space-between;
+    }
+</style>
+<div class="container">
+    <hr />
+    @if (ViewBag.LoginFail != null)
+    {
+        <div class="alert alert-warning alert-dismissible">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            @ViewBag.LoginFail
+        </div>
+    }
+    @if (TempData["ResetPassSucces"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("Thay đổi mật khẩu thành công");
+            });
+        </script>
+    }
+    <form asp-action="Login" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-lg-6" style="background-color: #10141d; border-radius:10px;text-align:center;height:8cm;">
+                <h3>Đăng nhập</h3>
+                <div class="form-group">
+                    <input asp-for="Email" class="form-control" placeholder="Tài khoản Email" style="margin-top:30px" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-for="Password" class="form-control" placeholder="Mật khẩu" style="margin-top:15px" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Đăng nhập" class="btn btn-outline-danger" style="margin-top:20px;width:10cm;border-radius:18px;margin-bottom:10px" />
+                </div>
+                <div class="otherlink" style="margin-top:20px;">
+                    <a asp-action="ForgotPassword">Quên mật khẩu</a>
+                    <a asp-action="Register">Đăng ký</a>
+                </div>
+            </div>
+            <div class="col-lg-6"></div>
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

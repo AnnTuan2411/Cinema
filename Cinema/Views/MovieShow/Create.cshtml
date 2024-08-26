@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="container">
+<h1>Create</h1>
+<h4 class="bg-danger">@ViewBag.Error</h4>
+<form action="/MovieShow/Create/" method="post">
+    <label for="StartTime">Start Time</label>
+        <input class="form-control" type="datetime-local" id="StartTime" name="StartTime"  min="@DateTime.Now.ToString("dd/MM/yyyy")" max="@DateTime.Now.AddDays(7).ToString("dd/MM/yyyy")" />
+    <input class="form-control" hidden type="datetime-local" id="EndTime" name="EndTime" value="@DateTime.Now.ToString()"  min="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")"/>
+    <label for=RoomId>Room</label>
+    <select class="form-control" id="RoomId" name="RoomId">
+        <option value="">Select...</option>
+        @foreach(var item in ViewBag.Rooms)
+        {
+            <option value="@item.RoomId">@item.RoomName</option>
+        }
+    </select>
+    <label for="MovieId">Movie</label>
+    <select class="form-control" id="MovieId" name="MovieId">
+        <option value="">Select...</option>
+        @foreach(var item in ViewBag.Movies)
+        {
+            <option value="@item.MovieId">@item.Title</option>
+        }
+    </select>
+    <label for="Price">Ticket price</label>
+    <input class="form-control" type ="number" id="Price" name="Price" value="70000"/> VND  <br> 
+    <label for=" Status">Status</label>
+    <select class="form-control" id="Status" name="Status">
+        <option value="True" selected>True</option>
+        <option value="False">False</option>
+    </select>
+    <button type="submit" class="btn btn-success">Create</button>
+    <a class="btn btn-danger" href="/MovieShow/Index">Cancel</a>
+</form>
+</div>

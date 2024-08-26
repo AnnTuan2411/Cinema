@@ -1,0 +1,67 @@
+﻿@model Cinema.Models.Calendar
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3 text-center">
+            <h1 class="h3 d-inline align-middle">Xác nhận xóa lịch</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xl-2">
+                
+            </div>
+
+            <div class="col-md-8 col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0 mt-1">Thông tin chi tiết</h5>
+                    </div>
+                    <div class="card-body h-100 pt-0">
+                       
+
+                        <div class="card-header pt-0">
+                            <h5 class="card-title mb-0">Tiêu đề</h5>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            @Html.DisplayFor(model => model.Title)
+                        </div>
+                        <hr />
+
+                        <div class="card-header pt-0">
+                            <h5 class="card-title mb-0">Ngày làm</h5>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            @Model.Date.ToString("dd/MM/yyyy")
+                        </div>
+                        <hr />
+
+                        <div class="card-header pt-0">
+                            <h5 class="card-title mb-0">Mô tả</h5>
+                        </div>
+                        <div class="card-body pt-0 pb-0">
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                        <hr />         
+                        <form asp-action="Delete">
+                            <div class="row justify-content-center">
+                                <input type="hidden" asp-for="CalendarId" />
+                                <div class="d-grid col-md-3">
+                                    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+                                </div>
+                                <div class="d-grid col-md-3">
+                                    <a class="btn btn-primary" asp-action="Index">Trở về</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

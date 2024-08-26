@@ -1,0 +1,46 @@
+﻿@model Cinema.Models.Movie
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+}
+<div class="container">
+<img src="@Model.Background" width="max"/>
+</br>
+<img src="@Model.Poster"/>
+<h1>@Model.Title</h1>
+<p>Country: @Model.Country</p>
+<p>Director: @foreach(var item in ViewBag.Directors)
+    {
+        <a href="/people/detail/@item.PersonId">@item.PersonName, </a>
+    }
+</p>
+<p>
+    Actors: @foreach (var item in ViewBag.Actors)
+    {
+        <a href="/people/detail/@item.PersonId">@item.PersonName, </a>
+    }
+
+</p>
+<p>Duration: @Model.Duration minutes</p>
+<p>Language: @Model.Language</p>
+<a href="@Model.TrailerUrl" class="btn btn-secondary">Trailer</a>
+@if (ViewBag.SessionRoleID == 1)
+{   
+    <a href="/MovieShow/MovieShowByMovie?movieId=@Model.MovieId" class="btn btn-danger">Buy Ticket</a>
+}
+else if (ViewBag.SessionRoleID == 4)
+{
+    <a href="/Movie/Edit/@Model.MovieId">Edit</a>
+}
+</div>
+
+
+    

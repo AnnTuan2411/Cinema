@@ -1,0 +1,100 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model X.PagedList.IPagedList<Cinema.Models.Calendar>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<main class="content">
+    <h1 class="h3 mb-3"><strong>Danh sách lịch làm việc</strong></h1>
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12 col-lg-8 col-xxl-12 d-flex">
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0"><a asp-action="Create">Tạo lịch mới</a></h5>
+                        @using (Html.BeginForm("Index", "CalendarManage", FormMethod.Get))
+                        {
+                            <div class="float-end">
+                                <input type="text" name="strSearch" placeholder="Nhập ID/Họ tên nhân viên" />
+                                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+                            </div>
+                        }
+                    </div>
+                   
+                    <table class="table table-hover my-0">
+                        <thead>
+                            <tr>
+                                <th>ID nhân viên</th>
+                                <th>Họ và tên</th>
+                                <th>Tiêu đề</th>
+                                <th>Nội dung</th>
+                                <th>Ca</th>
+                                <th>Ngày làm</th>
+                                <th class="text-center">Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Emloyee.EmployeeId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Emloyee.Acc.FullName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Title)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @if (item.Shift == 1)
+                                        {
+                                            <p>Sáng</p>
+                                        }
+                                        else if (item.Shift == 2)
+                                        {
+                                            <p>Chiều</p>
+                                        }
+                                        else
+                                        {
+                                            <p>  Tối</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.Date.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td class="text-center">
+                                        <a asp-action="Edit" asp-route-id="@item.CalendarId">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </a> |
+                                        <a asp-action="Details" asp-route-id="@item.CalendarId">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a> |
+                                        <a asp-action="Delete" asp-route-id="@item.CalendarId">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                @Html.PagedListPager(Model, page => Url.Action("Index", "CalendarManage",
+                         new { page = page }),
+                         new PagedListRenderOptions
+                {
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new string[] { "page-link" }
+                })
+            </div>
+        </div>
+    </div>
+</main>

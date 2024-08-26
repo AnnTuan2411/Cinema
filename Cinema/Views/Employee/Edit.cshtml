@@ -1,0 +1,142 @@
+﻿@model Cinema.ViewModel.EmployeeEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<form method="post" asp-action="Edit" enctype="multipart/form-data">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Chỉnh sửa vị trí đảm nhiệm</h2>
+            <hr />
+        </div>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="EmployeeId" value="@Model.EmployeeId" />
+        <div class="form-group" hidden>
+            <label asp-for="AccountId" class="control-label"></label>
+            <input asp-for="AccountId" class="form-control" value="@Model.AccountId" />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Vị trí</label>
+            <input asp-for="Position" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Họ tên</label>
+            <input asp-for="FullName" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Ngày sinh</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Điện thoại</label>
+            <input asp-for="Phone" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Email</label>
+            <input asp-for="Email" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Địa chỉ</label>
+            <input asp-for="Address" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0">Giới tính</label>
+            <input asp-for="Gender" class="form-control" readonly />
+        </div>
+        <div class="mb-3 row p-1">
+            <label asp-for="RoleID" class="control-label">Đảm nhiệm</label>
+            <select class="form-control" name="RoleId" id="RoleId" only>
+                @foreach (var item in @ViewBag.AccountRole)
+                {
+                    <option value="@item.RoleId">@item.AccountTypeName</option>
+                }
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary form-control">Cập nhật</button>
+            </div>
+            <div class="col-6">
+                <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-secondary form-control">
+                    Quay lại trang
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+@*<h2>Edit</h2>
+
+<h4>EmployeeEditViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EmployeeId" value="@Model.EmployeeId" />
+            <div class="form-group" hidden>
+                <label asp-for="AccountId" class="control-label"></label>
+                <input asp-for="AccountId" class="form-control" value="@Model.AccountId" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Position" class="control-label"></label>
+                <input asp-for="Position" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" readonly/>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleID" class="control-label"></label>
+                <select class="form-control" name="RoleId" id="RoleId" only>
+                    @foreach (var item in @ViewBag.AccountRole)
+                    {
+                        <option value="@item.RoleId">@item.AccountTypeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

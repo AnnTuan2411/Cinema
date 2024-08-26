@@ -1,0 +1,107 @@
+﻿@model Cinema.Models.Movie
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+}
+<div class="container">
+<div></div>
+<h2>@Model.Title</h2>
+@if (@ViewBag.movieShows1.Count != 0)
+{
+    <h5>@DateTime.Today.Date.ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows1)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows2.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(1).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows2)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows3.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(2).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in @ViewBag.movieShows3)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows4.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(3).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows4)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows5.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(4).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows5)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows6.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(5).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows6)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows7.Count != 0)
+{
+    <h5>@DateTime.Today.Date.AddDays(6).ToString("dd/MM/yyyy")</h5>
+    @foreach (var movieShow in ViewBag.movieShows7)
+    {
+        <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+            <span>@movieShow.StartTime</span>
+            <span>Room: @movieShow.RoomId</span>
+        </a>
+        <br />
+    }
+}
+@if (@ViewBag.movieShows7.Count == 0 && @ViewBag.movieShows6.Count == 0 && @ViewBag.movieShows5.Count == 0 && @ViewBag.movieShows4.Count == 0 && @ViewBag.movieShows3.Count == 0 && @ViewBag.movieShows2.Count == 0 && @ViewBag.movieShows1.Count == 0)
+{
+    <h3>Hiện Không có lịch chiếu</h3>
+}
+</div>
+
+

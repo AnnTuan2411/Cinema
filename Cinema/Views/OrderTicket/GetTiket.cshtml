@@ -1,0 +1,58 @@
+﻿@model Cinema.Models.Booking
+@{
+    ViewData["Title"] = "GetTiket";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h2>GetTiket</h2>
+    <form action="/OrderTicket/GetTiket" method="post">
+       <input type="text" name="bookingId" id="bookingId"/> 
+       <button type ="submit" class="btn btn-success">Submit</buttonclass>
+    </form>
+
+@if(Model != null)
+{
+    <div class="row">
+        <div class="col-4">
+                <h5>Movie: </h5>
+                <p>@ViewBag.Movie.Title</p>
+        </div>
+            
+            <div class="col-4">
+                <h5>StarTime: </h5>
+                <p>@ViewBag.MovieShow.StartTime.ToString("hh/mm")</p>
+            </div>
+            
+          <div class="col-4">
+                <h5>Room: </h5>
+                <p>@ViewBag.Room.RoomName</p>
+          </div>
+            
+    </div>
+    
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Seat</th>
+        </tr>
+        @foreach (var item in ViewBag.Tickets)
+        {
+            <tr>
+                <td>@item.TicketId</td>
+                @foreach (var item1 in ViewBag.Seats)
+                {
+                    if (item1.SeatId == item.SeatId)
+                    {
+                        <td>@item1.SeatName</td>
+                    }
+                }
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p>@ViewBag.Error</p>
+}
+</div>

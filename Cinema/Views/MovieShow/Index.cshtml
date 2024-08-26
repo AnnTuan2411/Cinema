@@ -1,0 +1,42 @@
+﻿@model List<Cinema.Models.MovieShow>
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+}
+<div class="container">
+<h1>Shows</h1>
+@if (ViewBag.SessionRoleID == 4)
+{
+    <a href="/MovieShow/Create/">Create</a>
+}
+
+<form action="/MovieShow/Index">
+      <label for="Date">Date</label>
+        <input type="Date" id="Date" name="Date" value="@ViewBag.Date.ToString("yyyy-MM-dd")" min="@DateTime.Today.ToString("yyyy-MM-dd-hh-mm")" max="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd-hh-mm")" />
+      <button type="submit" class="btn btn-primary">Go</button>
+</form>
+@foreach(var item in ViewBag.Movies)
+{
+    <h4>@item.Title</h4>
+    foreach(var movieShow in @Model)
+    {
+        if(movieShow.MovieId == item.MovieId)
+        {
+            <a href="/MovieShow/Detail/@movieShow.MovieShowId">
+                <span>@movieShow.StartTime</span>
+                <span>Room: @movieShow.RoomId</span>
+            </a><br />
+        }
+    }
+}
+</div>
+
+

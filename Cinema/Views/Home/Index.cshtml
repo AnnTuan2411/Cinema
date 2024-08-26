@@ -1,0 +1,83 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+}
+@if (TempData["ChangePassSucces"] != null)
+{
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			alert("Thay đổi mật khẩu thành công");
+		});
+	</script>
+}
+<style>
+	.navbar-brand {
+		padding-top: 0px;
+	}
+</style>
+<link href="~/fecinema/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- banner -->
+<div id="slidey" style="display:none;">
+	<ul>
+
+		@foreach (var item in Model.Take(6))
+		{
+			<li><img src="@item.Background" alt=" "><p class='title'>@item.Title</p><p class='description'>@item.Describe</p></li>
+		}
+
+	</ul>
+</div>
+<script src="~/js/jquery.slidey.js"></script>
+<script src="~/js/jquery.dotdotdot.min.js"></script>
+<script type="text/javascript">
+	$("#slidey").slidey({
+		interval: 8000,
+		listCount: 5,
+		autoplay: false,
+		showList: true
+	});
+	$(".slidey-list-description").dotdotdot();
+</script>
+<!-- //banner -->
+<!-- general -->
+@using X.PagedList.Mvc.Core;
+@model X.PagedList.IPagedList<Movie>
+<div class="general">
+	<h4 class="latest-text w3_latest_text">Featured Movies</h4>
+	<div class="container">
+		<div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+			<ul id="myTab" class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Đang chiếu</a></li>
+				<li role="presentation"><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Sắp chiếu</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
+					<div class="w3_agile_featured_movies">
+						@foreach (var item in Model)
+						{
+							<div class="col-md-2 w3l-movie-gride-agile">
+								<a href="@item.TrailerUrl" class="hvr-shutter-out-horizontal">
+									<img src="@item.Poster" title="album-name" class="img-responsive" alt=" " style="height: 250px">
+									<div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+								</a>
+								<div class="mid-1 agileits_w3layouts_mid_1_home">
+									<div class="w3l-movie-text">
+										<h6><a href="single.html">@item.Title</a></h6>
+									</div>
+									<div class="mid-2 agile_mid_2_home">
+										<p>@item.ReleaseDate</p>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+								<div class="ribben">
+									<p>NEW</p>
+								</div>
+							</div>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- //general -->

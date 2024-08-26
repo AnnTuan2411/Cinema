@@ -1,0 +1,27 @@
+﻿@model Cinema.Models.Person
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+}
+
+<div class="container">
+<img src="@Model.Image"/>
+<h1>@Model.PersonName</h1>
+<p>@Model.BirthDate.Value.ToString("dd/MM/yyyy")</p>
+<p>@Model.Information</p>
+<a href="@Model.WikipediaUrl" class="btn btn-primary">More Information</a>
+    @if (ViewBag.SessionRoleID == 4)
+    {
+        <td><a href="/people/edit/@Model.PersonId">Edit</a></td>
+    }
+
+</div>
+

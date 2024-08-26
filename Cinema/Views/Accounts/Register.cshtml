@@ -1,0 +1,87 @@
+﻿@model Cinema.Models.Account
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #8e640a;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+</style>
+
+@if (ViewBag.RegisterFail != null)
+{
+    <div id="ErrorMsg" class="alert alert-warning alert-dismissible">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @ViewBag.RegisterFail
+    </div>
+}
+<div class="container">
+    <hr />
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-md-6">
+                <label>Họ và tên</label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label>Giới tính</label><br />
+                <label>
+                    <input type="radio" asp-for="Gender" value="Nam" /> Nam
+                </label>
+                <label>
+                    <input type="radio" asp-for="Gender" value="Nữ" /> Nữ
+                </label>
+            </div>
+            <div class="col-md-6">
+                <label>Ngày sinh</label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label>Số điện thoại</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label>Mật khẩu</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="col-md-6" style="margin-top:30px;">
+                <input type="submit" value="Create" class="btn btn-outline-success" />
+            </div>
+            <div class="col-md-6">
+                <label>Địa chỉ </label>
+                <input asp-for="Address" class="form-control" />
+            </div>
+        </div>
+    </form>
+
+</div>
+

@@ -1,0 +1,99 @@
+﻿@model Cinema.Models.Movie
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h1>Edit</h1>
+<form action="/Movie/Edit/" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-8">
+            <input type="hidden" id="MovieId" name="MovieId" value="@Model.MovieId" />
+            <label for="Title">Movie Title</label>
+            <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" />
+            <lable for="Category">Movie categories</lable>
+            <select class="form-control" name="Category" id="Category" multiple>
+                @foreach (var item in @ViewBag.Categories)
+                {
+                    if (@ViewBag.movieCategorySelecteds.Contains(item.MovieCategoryId))
+                    {
+                        <option value="@item.MovieCategoryId" selected>@item.MovieCategoryName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.MovieCategoryId" >@item.MovieCategoryName</option>
+                    }
+                }
+            </select>
+            <lable for="Actor">Actor</lable>
+            <select class="form-control" name="Actor" id="Actor" multiple>
+                @foreach (var item in @ViewBag.People)
+                {
+                    if (@ViewBag.Actors.Contains(item.PersonId))
+                    {
+                        <option value="@item.PersonId" selected>@item.PersonName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.PersonId" >@item.PersonName</option>
+                    }
+                }
+            </select>
+            <lable for="Director">Director</lable>
+            <select class="form-control" name="Director" id="Director" multiple>
+                @foreach (var item in @ViewBag.People)
+                {
+                    if (@ViewBag.Directors.Contains(item.PersonId))
+                    {
+                        <option value="@item.PersonId" selected>@item.PersonName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.PersonId">@item.PersonName</option>
+                    }
+                }
+            </select>
+            <label for="Duration">Duration</label>
+            <input type="number" class="form-control" id="Duration" name="Duration" value="@Model.Duration" />
+            <lable for="Language">Language</lable>
+            <input type="text" class="form-control" id="Language" name="Language" value="@Model.Language" />
+            <lable for="Country">Country</lable>
+            <input type="text" class="form-control" id="Country" name="Country" value="@Model.Country" />
+            <label for="ReleaseDate">Release Date</label>
+            <input type="date" class="form-control" id="ReleaseDate" name="ReleaseDate" value="@Model.ReleaseDate.ToString("yyyy-MM-dd")" />
+            <label for="TrailerUrl">Trailer Url</label>
+            <input type="text" class="form-control" id="TrailerUrl" name="TrailerUrl" value="@Model.TrailerUrl" />
+            <label for="License">License</label>
+            <input type="text" class="form-control" id="License" name="License" value="@Model.License" />
+            <label for="StartDate">Start Date</label>
+            <input type="date" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-dd")" />
+            <label for="FinishDate">Finish Date</label>
+            <input type="date" class="form-control" id="FinishDate" name="FinishDate" value="@Model.FinishDate.ToString("yyyy-MM-dd")" />
+            <label for="Status">Status</label>
+            <select class="form-control" name="Status" id="Status">
+                @if(Model.Status == 1)
+                {
+                    <option value="0">False</option>
+                    <option value="1" selected>True</option>
+                }
+                else
+                {
+                    <option value="0" selected>False</option>
+                    <option value="1">True</option>
+                }               
+            </select>
+            <label for="PosterURL">Poster</label>
+            <img src="@Model.Poster" />
+            <input type="file" id="PosterURL" name="PosterURL" />
+            <input type="hidden" id="Poster" name="Poster" value="@Model.Poster"/>
+            <label for="BackgroundURL">BackgroundURL</label>
+            <img src="@Model.Background"/>
+            <input type="file" id="BackgroundURL" name="BackgroundURL" />
+            <input type="hidden" value="@Model.Background" id="Background" name="Background"/>
+            <label for="Describe">Describe</label>
+            <textarea class="form-control" id="Describe" name="Describe" >@Model.Describe</textarea>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="/Movie/Detail/@Model.MovieId" class="btn btn-danger">Cancel</a>
+</form>

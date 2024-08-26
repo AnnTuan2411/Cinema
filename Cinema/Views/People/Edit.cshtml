@@ -1,0 +1,31 @@
+﻿@model Cinema.Models.Person
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="container">
+<h1>Edit</h1>
+<form action="/People/Edit/" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="Col-8">
+            <input type="hidden" id="PersonId" name="PersonId" value="@Model.PersonId" />
+            <label for="PersonName">Name</label>
+            <input type="text" class="form-control" id="PersonName" name="PersonName" value="@Model.PersonName" />
+            <label for="BirthDate">Date of birth</label>
+            <input type="date" class="form-control" id="BirthDate" name="BirthDate" value="@Model.BirthDate.Value.ToString("yyyy-MM-dd")" />
+            <label for="IMAGEURL">Image</label>
+            <img src="@Model.Image" />
+            <input type="file" class="form-control" id="IMAGEURL" name="IMAGEURL" accept="image/*"/>
+            <label hidden for="Image">Image</label>
+            <input type="hidden" id="Image" name="Image" value="@Model.Image"/>
+            <label for="WikipediaURL">Wikipedia URL</label>
+            <input type="text" class="form-control" id="WikipediaUrl" name="WikipediaUrl" value="@Model.WikipediaUrl"/>
+            <lable for="Information">Information</lable>
+            <textarea id="Information" name="Information" class="form-control">@Model.Information</textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Save</button>
+        <a class="btn btn-danger" href="/People/Index">Cancel</a>
+    </div>
+</form>
+</div>
+

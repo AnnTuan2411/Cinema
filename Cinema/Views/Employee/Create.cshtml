@@ -1,0 +1,153 @@
+﻿@model Cinema.ViewModel.EmployeeCreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Tạo thêm nhân viên</h2>
+            <hr/>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Vị trí</label>
+            <input asp-for="Position" class="form-control"/>
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Họ tên</label>
+            <input asp-for="FullName" class="form-control"/>
+            <span asp-validation-for="FullName" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Ngày sinh</label>
+            <input asp-for="DateOfBirth" type="date" class="form-control" />
+            <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Điện thoại</label>
+            <input asp-for="Phone" class="form-control" />
+            <span asp-validation-for="Phone" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Email</label>
+            <input asp-for="Email" type="text" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Mật khẩu</label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Địa chỉ</label>
+            <input asp-for="Address" class="form-control" />
+            <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p-0">Giới tính</label>
+            <select asp-for="Gender" class="form-control">
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+        </div>
+        <div class="mb-3 row p-1">
+            <label class="p=0">Đảm nhiệm</label>
+            <select asp-for="RoleID" class="form-control">
+                <option value="3">QL Nhân viên</option>
+                <option value="4">QL Rạp Chiếu</option>
+                <option value="5">Nhân viên</option>
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary form-control">Tạo</button>
+            </div>
+            <div class="col-6">
+            <a asp-controller="Employee" asp-action="Index" class="btn btn-outline-secondary form-control">
+                Quay lại trang
+            </a>
+            </div>
+        </div>
+    </div>
+</form>
+@*<h2>Create</h2>
+
+<h4>EmployeeCreateViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Position" class="control-label"></label>
+                <input asp-for="Position" class="form-control" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label"></label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input name="DateOfBirth" type="date" id="DateOfBirth" class="form-control" />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input name="Password" type="password" id="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <input asp-for="Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoleID" class="control-label">Vai trò</label>
+                <select class="form-control" name="RoleId" id="RoleId" multiple>
+                    @foreach (var item in @ViewBag.AccountRole)
+                    {
+                        <option value="@item.RoleId">@item.AccountTypeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>*@
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

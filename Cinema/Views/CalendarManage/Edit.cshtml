@@ -1,0 +1,72 @@
+﻿@model Cinema.Models.Calendar
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<main class="content">
+    <div class="container-fluid p-0">
+        <div class="mb-3 text-center">
+            <h1 class="h3 d-inline align-middle text-primary ">Cập nhật thông tin</h1>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xl-2">
+            </div>
+            <div class="col-md-8 col-xl-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Form nhập thông tin</h5>
+                    </div>
+                    <div class="card-body h-100 pt-0">
+                        <form asp-action="Edit" enctype="multipart/form-data">
+                            <input type="hidden" asp-for="CalendarId" />
+                            <input type="hidden" asp-for="EmloyeeId" />
+                            <div class="card-header">
+                                <h5 class="card-title mb-0"><label asp-for="Title" class="control-label">Tiêu đề</label></h5>
+                            </div>
+                            <div class="card-body pt-0 pb-0">
+                                <input asp-for="Title" class="form-control" required />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+
+                            <div class="card-header">
+                                <h5 class="card-title mb-0"><label asp-for="Shift" class="control-label">Ca</label></h5>
+                            </div>
+                            <div class="card-body pt-0 pb-0">
+                                <input asp-for="Shift" min="1" max="3" class="form-control" required />
+                                <span asp-validation-for="Shift" class="text-danger"></span>
+                            </div>
+
+                            <div class="card-header">
+                                <h5 class="card-title mb-0"> <label asp-for="Date" class="control-label">Ngày làm</label></h5>
+                            </div>
+                            <div class="card-body pt-0 pb-0">
+                                <input asp-for="Date" type="date" class="form-control" required />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+
+                            <div class="card-header">
+                                <h5 class="card-title mb-0"> <label asp-for="Description" class="control-label">Mô tả chi tiết</label></h5>
+                            </div>
+                            <div class="card-body pt-0 pb-0">
+                                <input asp-for="Description" class="form-control" required />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                            <hr>
+
+                            <div class="row justify-content-center">
+                                <div class="d-grid col-md-3">
+                                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                                </div>
+                                <div class="d-grid  col-md-3">
+                                    @Html.ActionLink("Trở về", "Index", "CalendarManage", null, new { @class = "btn btn-primary" })
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

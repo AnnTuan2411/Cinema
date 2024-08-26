@@ -1,0 +1,65 @@
+﻿@model Cinema.Models.Customer
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #8e640a;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+</style>
+<hr />
+@if (ViewBag.CheckDuplicate != null)
+{
+    <div id="ErrorMsg" class="alert alert-warning alert-dismissible">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @ViewBag.CheckDuplicate
+    </div>
+}
+@if (ViewBag.CheckExits != null)
+{
+    <div id="ErrorMsg" class="alert alert-warning alert-dismissible">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        @ViewBag.CheckExits
+    </div>
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="CustomerId" />
+                <div class="form-group">
+                    <label>Mã số thẻ thành viên</label>
+                    <input asp-for="MembershipId" class="form-control" asp-items="ViewBag.MembershipId" />
+                    <span asp-validation-for="MembershipId" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="margin-top:10px;">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a class="btn btn-secondary" asp-action="Index" asp-controller="Accounts">Trở về</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

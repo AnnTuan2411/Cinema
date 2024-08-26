@@ -1,0 +1,23 @@
+﻿@model List<Cinema.Models.OrderTicket>
+@{
+    ViewData["Title"] = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+<h1>Order</h1>
+<p>Movie Show: @ViewBag.Movie.Title</p>
+<p>Duration: @ViewBag.Movie.Duration</p>
+<p>Date: @ViewBag.MovieShow.StartTime.ToString("dd/MM/yyyy")</p>
+<p>Start Time: @ViewBag.MovieShow.StartTime.ToString("HH:mm")</p>
+<p>Seat: </p>
+<p>
+@foreach(var item in ViewBag.Seat)
+{
+     <p>@item.SeatName, </p>
+}
+</p>
+<p>Total Price: </p>
+<label for="Payment">Payment</label>
+<a href="/OrderTicket/Payment?bookingId=@ViewBag.BookingId" id="Payment" name="payment" class="btn btn-danger">@ViewBag.TotalPrice đ</a>
+<a href="/OrderTicket/PaymentCancel/@ViewBag.BookingId" id="Payment" name="payment" class="btn btn-danger">Cancel</a>
+</div>

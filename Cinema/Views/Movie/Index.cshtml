@@ -1,0 +1,61 @@
+﻿@model List<Cinema.Models.Movie>
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Index";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+}
+<div class="container">
+    <h1>Movie</h1>
+    @if (ViewBag.SessionRoleID == 4)
+    {
+        <a href="/Movie/Create">Create Movie</a>
+    }
+
+    <form action="/Movie/index">
+        <input type="text" id="Search" name="Search" value="@ViewBag.Search" />
+        <select id="CategoryFilter" name="CategoryFilter">
+            <option value="0">All</option>
+            @foreach (var item in ViewBag.Categories)
+            {
+                if (item.MovieCategoryId == ViewBag.MovieCategoryId)
+                {
+                    <option value="@item.MovieCategoryId" selected>@item.MovieCategoryName</option>
+                }
+                else
+                {
+                    <option value="@item.MovieCategoryId">@item.MovieCategoryName</option>
+                }
+
+            }
+
+        </select>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <div class="filters-content">
+        <div class="row grid">
+            <div class="row">
+                @foreach (var item in @Model)
+                {
+                    <div class="col-lg-3">
+                        <div class="card">
+                            <img class="card-img-top" src="@item.Poster" alt="film" style="height: 400px">
+                            <div class="card-body">
+                                <a href="/movie/detail/@item.MovieId"><h5>@item.Title</h5></a>
+                                <h6>@item.Country</h6>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

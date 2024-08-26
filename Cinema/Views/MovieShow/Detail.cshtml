@@ -1,0 +1,33 @@
+﻿@model Cinema.Models.MovieShow
+@{
+    if (ViewBag.SessionRoleID == 1)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else if (ViewBag.SessionRoleID == 4)
+    {
+        ViewData["Title"] = "Detail";
+        Layout = "~/Views/Shared/_MainLayout.cshtml";
+    }
+
+}
+<div class="container">
+<form action="/OrderTicket/Order" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="MovieShowId" name="MovieShowId" value="@Model.MovieShowId"/>
+<h1>Detail</h1>
+<img src="@ViewBag.Movie.Poster" />
+<h3>@ViewBag.Movie.Title</h3>
+<p>@Model.StartTime.Date.ToString("dd/MM/yyyy")</p>
+<p>@Model.StartTime.TimeOfDay</p>
+    <select class="form-control" multiple id="SeatIds" name="SeatIds">
+    @foreach(var item in ViewBag.Seats)
+    {
+        <option value="@item.SeatId">@item.SeatName</option>
+    }
+</select>
+    @if (ViewBag.SessionRoleID == 1){
+        <button type="submit" class="btn btn-success">Order</button>
+    }
+</form>
+</div>

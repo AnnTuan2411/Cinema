@@ -1,0 +1,26 @@
+﻿@model Cinema.Models.Employee
+
+<!-- Modal -->
+<div class="modal fade" id="disableEmpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="disableEmpLabel">Xác nhận hành động</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="DisableEmp">
+                    <input type="hidden" asp-for="@Model.EmployeeId" />
+                    <p>Chấp nhận thôi việc nhân viên <label asp-for="Acc.FullName">@Model.Acc.FullName</label></p>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>

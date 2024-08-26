@@ -1,0 +1,174 @@
+﻿@model Cinema.Models.Customer
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .menu {
+        border: 1px solid #F26A6A;
+        text-align: center;
+        width: 7cm;
+        border-radius: 10px;
+    }
+
+    h3 {
+        border-bottom: 1px solid #F26A6A;
+        margin-bottom: 0px;
+        height: 1.4cm;
+    }
+
+    .menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+        .menu ul .in1 {
+            border-bottom: 1px solid #F26A6A;
+            height: 1.2cm;
+            padding-top: 10px;
+        }
+
+        .menu ul .in2 {
+            height: 1.2cm;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+        }
+
+        .menu ul a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu ul .in1 a {
+            padding-top: 10px;
+        }
+
+        .menu ul .in1:hover, .in2:hover {
+            background-color: #F26A6A;
+            color: white;
+        }
+
+    .form-group {
+        margin-top: 20px;
+        margin-left: 40%;
+    }
+
+        .form-group input {
+            width: 3cm;
+        }
+</style>
+<div class="container">
+    <hr />
+    <div class="row">
+        <div class="col-4">
+            <div class="menu">
+                <h3 style="line-height:50px;">TÀI KHOẢN</h3>
+                <ul>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="Edit">THÔNG TIN TÀI KHOẢN</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="ChangePass">THAY ĐỔI MẬT KHẨU</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Customers" asp-action="Details">THÔNG TIN THẺ THÀNH VIÊN</a></li>
+                    <li class="in2"><a href="#">LỊCH SỬ GIAO DỊCH ONLINE</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div style="background-color:#7e8eaa;text-align:center;color:white;height:1cm;font-weight:500;line-height:35px;">THÔNG TIN THẺ THÀNH VIÊN</div>
+            @if (ViewBag.Displaymembership != null)
+            {
+                <div style="style=" margin-top:10px"">
+                    <p style="margin-bottom:0px;"> <strong>Note: </strong>@ViewBag.Displaymembership</p>
+
+                </div>
+            }
+            else
+            {
+                @* <form asp-action="Details">
+            <input type="hidden" asp-for="AccId" />
+            <div class="row" style="margin-top:10px">
+            </div>
+            </form> *@
+                <div style="style=" margin-top:10px"">
+                    <p>Bậc của bạn:        @ViewBag.Membershiplevel</p>
+                    <p>Điểm thưởng:        @ViewBag.Repoint RP</p>
+                    <p>Danh mục đổi quà</p>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Quà Tặng</th>
+                            <th>Điểm thưởng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bắp vừa (32oz)</td>
+                            <td>50</td>
+                        </tr>
+                        <tr>
+                            <td>Combo 1 (1 Bắp vừa 32oz + 1 Nước lớn 22oz)</td>
+                            <td>72</td>
+                        </tr>
+                        <tr>
+                            <td>Ticket Voucher 2D/3D - Weekdays Only</td>
+                            <td>65</td>
+                        </tr>
+                        <tr>
+                            <td>Combo 1 extra (1 Bắp vừa 32oz + 1 Nước lớn 22oz + 1 Snack)</td>
+                            <td>87</td>
+                        </tr>
+                        <tr>
+                            <td>Tra chanh (32oz)</td>
+                            <td>35</td>
+                        </tr>
+                        <tr>
+                            <td>Cà phê Ông bầu</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Twister</td>
+                            <td>20</td>
+                        </tr>
+                        <tr>
+                            <td>Pepsi light</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Highland</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Upsize Popcorn 32oz -> 44oz</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Sting</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Pepsi light</td>
+                            <td>29</td>
+                        </tr>
+                        <tr>
+                            <td>Upsize coke 22oz -> 32oz</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Milo (22oz)</td>
+                            <td>35</td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

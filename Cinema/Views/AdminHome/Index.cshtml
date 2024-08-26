@@ -1,0 +1,234 @@
+﻿@{
+	ViewData["Title"] = "Home Page";
+	Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<main class="content">
+	<div class="container-fluid p-0">
+		<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+
+		<!-- Thống kê-->
+		<div class="row">
+			<div class="col-xl-6 col-xxl-5 d-flex">
+				<div class="w-100">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Vé</h5>
+										</div>
+										<div class="col-auto">
+											<div class="stat text-primary">
+												<i class="fa-solid fa-ticket"></i>
+											</div>
+										</div>
+									</div>
+									<h1 class="mt-1 mb-3">@ViewBag.CurrentMonthTicketCount Vé</h1>
+									<div class="mb-0">
+										@if (@ViewBag.TicketGrowthPercen < 0)
+										{
+											<span class="text-danger"><i class="mdi mdi-arrow-bottom-right"></i>Giảm @ViewBag.TicketGrowthPercen %</span>
+										}
+										else
+										{
+											<span class="text-success"><i class="mdi mdi-arrow-bottom-right"></i>Tăng @ViewBag.TicketGrowthPercen %</span>
+										}
+										<span class="text-muted">So với tháng trước</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col mt-0">
+											<h5 class="card-title">Doanh thu</h5>
+										</div>
+										<div class="col-auto">
+											<div class="stat text-primary">
+												<i class="fa-solid fa-dong-sign"></i>
+											</div>
+										</div>
+									</div>
+									<h1 class="mt-1 mb-3">@ViewBag.CurrentMonthMovieIncome VND</h1>
+									<div class="mb-0">
+										@if (@ViewBag.MovieIncomeGrowthPercen < 0)
+										{
+											<span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i>Giảm @ViewBag.MovieIncomeGrowthPercen %</span>
+										}
+										else
+										{
+											<span class="text-success"> <i class="mdi mdi-arrow-bottom-right"></i>Tăng @ViewBag.MovieIncomeGrowthPercen %</span>
+										}
+										<span class="text-muted">So với tháng trước</span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xl-6 col-xxl-7">
+				<div class="card flex-fill w-100">
+					<div class="card-header text-center">
+						<h5 class="card-title mb-0">Chất lượng phim</h5>
+					</div>
+					<div class="card-body py-3">
+						<div class="">
+							<canvas id="lineChart"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-12 col-lg-8 col-xxl-12 d-flex">
+				<!-- col-xxl-9 -->
+				<div class="card flex-fill">
+					<div class="card-header">
+						<h5 class="card-title mb-0">
+							@if (ViewBag.SessionRoleID == 3)
+							{
+							<a asp-area="" asp-controller="EmployeeManage" asp-action="ListEmployeesAndAccounts">
+								<span class="align-middle">Danh sách nhân viên</span>
+							</a>
+							}
+							else if (ViewBag.SessionRoleID == 2)
+							{
+								<a asp-area="" asp-controller="" asp-action="">
+									<span class="align-middle">Danh sách tài khoản</span>
+								</a>
+							}
+						</h5>
+					</div>
+					<table class="table table-hover my-0">
+						<thead>
+							<tr>
+								<th>ID nhân viên</th>
+								<th>Họ và tên</th>
+								<th>Chức vụ</th>
+								<th>Số điện thoại</th>
+								<th>Email</th>
+								<th>Trạng thái</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							@foreach (var item in ViewBag.ListEmps)
+							{
+								<tr>
+									<td>
+										@item.EmployeeId
+									</td>
+									<td>
+										@item.Acc.FullName
+									</td>
+									<td>
+										@if (@item.Position.Contains("NV"))
+										{
+											<span class="badge bg-info">@item.Position</span>
+										}
+										else if (@item.Position.Contains("QL"))
+										{
+											<span class="badge bg-success">@item.Position</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">@item.Position</span>
+										}
+
+									</td>
+									<td>
+										@item.Acc.Phone
+									</td>
+									<td>
+										@item.Acc.Email
+									</td>
+									<td>
+										@if (@item.Acc.Status == 1)
+										{
+											<span class="badge bg-primary">Làm việc</span>
+										}
+										else
+										{
+											<span class="badge bg-danger">Nghỉ việc</span>
+										}
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+	@section Scripts {
+		<script>
+			$(document).ready(function () {
+				loadLineChart();
+			});
+
+			var myLineChart;
+
+			
+
+			function loadLineChart() {
+				var selected = $('#selectedLine').val();
+				$.ajax({
+					url: '/StatisticsManage/LoadLineChart?selected=' + selected,
+					type: 'GET',
+					success: function (data) {
+						console.log(data);			
+						updateLineChart(data);
+					}
+				});
+			}
+
+			function updateLineChart(list) {
+				var ctxLine = document.getElementById('lineChart');
+				var titles = [];
+				var total = [];
+
+
+				list.forEach(function (item) {
+					titles.push(item.movieName);
+					total.push(item.percenTicketSold);
+
+				});
+
+				myLineChart = new Chart(ctxLine, {
+					type: 'line',
+					data: {
+						labels: titles,
+						datasets: [{
+							label: 'Phần trăm đánh giá về chất lượng phim',
+							data: total,
+							fill: true,
+							backgroundColor: "rgba(215, 227, 244, 1)",
+							tension: 0.1
+						}]
+					},
+					options: {
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true
+								}
+							}]
+						}
+					}
+				});
+			}
+
+
+		</script>
+	}
+</main>

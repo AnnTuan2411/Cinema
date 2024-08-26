@@ -1,0 +1,30 @@
+﻿@model Cinema.Models.Membership
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <hr />
+    <p>Are you sure you want to delete this Membership?</p>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.MembershiplevelName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MembershiplevelName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RewardPoint)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RewardPoint)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="MembershipId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index" class="btn btn-secondary">Trở về</a>
+    </form>
+</div>
+

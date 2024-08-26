@@ -1,0 +1,235 @@
+﻿@model IEnumerable<Cinema.Models.Account>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    .menu {
+        border: 1px solid #F26A6A;
+        text-align: center;
+        width: 7cm;
+        border-radius: 10px;
+    }
+
+    h3 {
+        border-bottom: 1px solid #F26A6A;
+        margin-bottom: 0px;
+        height: 1.4cm;
+    }
+
+    .menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+        .menu ul .in1 {
+            border-bottom: 1px solid #F26A6A;
+            height: 1.2cm;
+            padding-top: 10px;
+        }
+
+        .menu ul .in2 {
+            height: 1.2cm;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+        }
+
+        .menu ul a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu ul .in1 a {
+            padding-top: 10px;
+        }
+
+        .menu ul .in1:hover, .in2:hover {
+            background-color: #F26A6A;
+            color: white;
+        }
+
+    .form-group {
+        margin-top: 20px;
+        margin-left: 40%;
+    }
+
+        .form-group input {
+            width: 3cm;
+        }
+
+    .search {
+        display: flex;
+    }
+
+    .pagination a {
+        text-decoration: none;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: normal;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        color: #333;
+    }
+
+    .pagination-container a:focus {
+        background-color: #eee;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+<div class="container">
+    <hr />
+    @if (TempData["CheckDuplicated"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("Đã có khách hàng khác dùng");
+            });
+        </script>
+    }
+    @if (TempData["CheckExits"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("Mã thẻ không tồn tại");
+            });
+        </script>
+    }
+    @if (TempData["UpdateSuccess"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                alert("Cập nhật thành công");
+            });
+        </script>
+    }
+
+    <div class="row">
+        <div class="col-3">
+            <div class="menu">
+                <h3 style="line-height:50px;">TÀI KHOẢN</h3>
+                <ul>
+                    <li class="in1"><a asp-controller="Memberships" asp-action="Index">DANH SÁCH THẺ THÀNH VIÊN</a></li>
+                    <li class="in1"><a asp-controller="Accounts" asp-action="Index">DANH SÁCH KHÁCH HÀNG</a></li>
+                    <li class="in2"><a asp-controller="Accounts" asp-action="EditEmployee">THÔNG TIN CÁ NHÂN</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-9">
+            <div style="background-color:#7e8eaa;text-align:center;color:white;height:1cm;font-weight:500;line-height:35px;">DANH SÁCH KHÁCH HÀNG</div>
+            <p style="margin-top:10px;">Tìm kiếm:</p>
+            <form class="d-flex flex-row align-items-center flex-wrap" asp-action="Index">
+                <input type="search" class="form-control" id="search" name="search" placeholder="Tìm kiếm" value="@ViewBag.SearchAcc" />
+                <button type="submit" class="btn btn-danger" id="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>Search
+                </button>
+            </form>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Họ Tên
+                        </th>
+                        <th>
+                            Ngày Sinh
+                        </th>
+                        <th>
+                            Số điện thoại
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
+                        <th>
+                            Giới tính
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @item.DateOfBirth.ToString("dd-MM-yyyy")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                <a asp-controller="Customers" asp-action="Edit" asp-route-id="@item.AccId" title="Sửa thông tin thẻ khách hàng">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="9">
+                            @{
+                                int PrevPage = ViewBag.Page - 1;
+                                if (PrevPage <= 0)
+                                {
+                                    PrevPage = 1;
+                                }
+                                int NextPage = ViewBag.Page + 1;
+                                if (NextPage > ViewBag.NoOfPages)
+                                {
+                                    NextPage = ViewBag.NoOfPages;
+                                }
+                            }
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="/Accounts/index?search=@ViewBag.SearchAcc&page=@PrevPage">
+                                        <
+                                    </a>
+                                </li>
+                                @for (int i = 0; i < ViewBag.NoOfPages; i++)
+                                {
+                                    if (i + 1 == ViewBag.Page)
+                                    {
+                                        <li class="page-item active">
+                                            <a class="page-link" href="/Accounts/index?search=@ViewBag.SearchAcc&page=@(i+1)">
+                                                @(i + 1)
+                                            </a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" href="/Accounts/index?search=@ViewBag.SearchAcc&&page=@(i+1)">
+                                                @(i + 1)
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" href="/Accounts/index?search=@ViewBag.SearchAcc&page=@NextPage">
+                                        >
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

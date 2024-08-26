@@ -1,0 +1,101 @@
+﻿@model List<Cinema.Models.MovieCategory>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<div class="container">
+<h1>Movie Categories</h1>
+<a href="/MovieCategories/create">Create new movie category</a>
+<form class="d-flex flex-row align-items-baseline flex-wrap" action="/movieCategories/index">
+    <label for="search" class="mx-2 my-1">Search</label>
+    <input type="search" class="form-control w-auto" id="search" name="search" placeholder="Search" value="@ViewBag.Search" />
+    <button type="submit" class="btn btn-primary mx-2">Go</button>
+</form>
+
+@{
+    string iconClass = "";
+    if (ViewBag.IconClass == "fa-sort-desc")
+    {
+        iconClass = "fa-sort-asc";
+    }
+    else
+    {
+        iconClass = "fa-sort-desc";
+    }
+}
+
+<table class="table">
+    <tr>
+        <th><a href ="/moviecategories/index?search=@ViewBag.Search&SortColumn=MovieCategoryID&IconClass=@iconClass&page=1">Movie Category ID</a>
+            @if (ViewBag.SortColumn == "MovieCategoryID")
+            {
+                <i class="fa @ViewBag.IconClass"></i>
+            }
+        </th>
+        <th><a href="/moviecategories/index?search=@ViewBag.Search&SortColumn=MovieCategoryName&IconClass=@iconClass&page=1">Movie Category Name</a>
+            @if (ViewBag.SortColumn == "MovieCategoryName")
+            {
+                <i class="fa @ViewBag.IconClass"></i>
+            }
+        </th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.MovieCategoryId</td>
+            <td>@item.MovieCategoryName</td>
+            <td><a href="/moviecategories/edit/@item.MovieCategoryId">Edit</a></td>
+        </tr>     
+    }
+    <tr>
+        <td colspan="9">
+            @{
+                int PrevPage = ViewBag.Page - 1;
+                if (PrevPage <= 0)
+                {
+                    PrevPage = 1;
+                }
+                int NextPage = ViewBag.Page + 1;
+                if (NextPage > ViewBag.NoOfPages)
+                {
+                    NextPage = ViewBag.NoOfPages;
+                }
+            }
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="/moviecategories/index?search=@ViewBag.Search&SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@PrevPage">
+                        <<
+                    </a>
+                </li>
+                @for (int i = 0; i < ViewBag.NoOfPages; i++)
+                {
+                    if (i + 1 == ViewBag.Page)
+                    {
+                        <li class="page-item active">
+                            <a class="page-link" href="/moviecategories/index?search=@ViewBag.Search&SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                @(i + 1)
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/moviecategories/index?search=@ViewBag.Search&SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@(i+1)">
+                                @(i + 1)
+                            </a>
+                        </li>
+                    }
+                }
+                <li class="page-item">
+                    <a class="page-link" href="/moviecategories/index?search=@ViewBag.Search&SortColumn=@ViewBag.SortColumn&IconClass=@ViewBag.IconClass&page=@NextPage">
+                        >>
+                    </a>
+                </li>
+            </ul>
+        </td>
+    </tr>
+</table>
+</div>
+

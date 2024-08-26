@@ -1,0 +1,315 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<main class="content ">
+    <div class="container-fluid p-0">
+        <div class="mb-3 text-center mb-5">
+            <h1 class="h3 d-inline align-middle ">Thống kê <strong>ManDanCinema</strong></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-xl-6 card shadow-lg p-3 mb-5 bg-white rounded" id="viewBarChar">
+                <h4 class="text-center">Tổng doanh thu theo từng tháng</h4>
+                <div class="float-end mt-3">
+                    <label for="selectedYear">Chọn năm:</label>
+                    <select id="selected" name="selected">
+                        @foreach (var year in ViewBag.AvailableYears)
+                        {
+                            @if (ViewBag.SelectedYear == year)
+                            {
+                                <option value="@year" selected>@year</option>
+                            }
+                            else
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" value="Xem doanh thu" class="btn btn-primary" onclick="loadBarChart()" />
+                </div>
+
+                <div>
+                    <p class="mt-5"></p>
+                    <canvas class="bg-success" id="barChart"></canvas>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-xl-6 card shadow-lg p-3 mb-5 bg-white rounded" id="viewDoughnutChar">
+                <h4 class="text-center">Phần trăm vé bán được mỗi bộ phim</h4>
+                <div class="float-end mt-3">
+                    <label for="selectedYear">Chọn năm:</label>
+                    <select id="selectedDoughnut" name="selectedDoughnut">
+                        @foreach (var year in ViewBag.AvailableMovieShowYears)
+                        {
+                            @if (ViewBag.SelectedMovieShowYear == year)
+                            {
+                                <option value="@year" selected>@year</option>
+                            }
+                            else
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" value="Thống kê số vé mỗi phim" class="btn btn-primary" onclick="loadDoughnutChart()" />
+
+                </div>
+                <div>
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="row mt-5">
+            <div class="col-xl-2">
+            </div>
+            <div class="col-md-6 col-xl-8 mt-2 shadow-lg p-3 mb-5 bg-white rounded" id="viewLineChar">
+                <h4 class="text-center">Thống kê đánh giá phim</h4>
+                <div class="float-end mt-3">
+                    <label for="selectedYear">Chọn năm:</label>
+                    <select id="selectedLine" name="selectedLine">
+                        @foreach (var year in ViewBag.AvailableMoviesYears)
+                        {
+                            @if (ViewBag.SelectedMoviesYear == year)
+                            {
+                                <option value="@year" selected>@year</option>
+                            }
+                            else
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                    <input type="submit" value="Thống kê đánh giá phim" class="btn btn-primary" onclick="loadLineChart()" />
+                </div>
+            </div>
+            <div>
+                <canvas id="lineChart"></canvas>
+            </div>
+        </div>
+
+    </div>
+    <div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    @section Scripts {
+        <script>
+            $(document).ready(function () {
+                loadBarChart();
+                loadDoughnutChart();
+                loadLineChart();
+            });
+            var myChart;
+            var myDoughnutChart;
+            var myLineChart;
+
+            //-------------------Line chart-----------------------------
+            function appendCanvasLine() {
+                $('#lineChart').remove();
+                $('#viewLineChar').append('<canvas id="lineChart"></canvas>');
+            }
+
+            function resetChartLine() {
+                if (myLineChart) {
+                    myLineChart.destroy();
+                }
+            }
+
+            function loadLineChart() {
+                var selected = $('#selectedLine').val();
+                $.ajax({
+                    url: '/StatisticsManage/LoadLineChart?selected=' + selected,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        resetChartLine();
+                        appendCanvasLine();
+                        updateLineChart(data);
+                    }
+                });
+            }
+
+            function updateLineChart(list) {
+                var ctxLine = document.getElementById('lineChart').getContext('2d');
+                var titles = [];
+                var total = [];
+
+
+                list.forEach(function (item) {
+                    titles.push(item.movieName);
+                    total.push(item.percenTicketSold);
+
+                });
+
+                myLineChart = new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: titles,
+                        datasets: [{
+                            label: 'Phần trăm đánh giá về chất lượng phim',
+                            data: total,
+                            fill: true,
+                            backgroundColor: "rgba(215, 227, 244, 1)",
+                            tension: 0.1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+            //-------------------Doughnut chart-----------------------------
+            function appendCanvasDoughnut() {
+                $('#doughnutChart').remove();
+                $('#viewDoughnutChar').append('<canvas id="doughnutChart"></canvas>');
+            }
+
+            function resetChartDoughnut() {
+                if (myDoughnutChart) {
+                    myDoughnutChart.destroy();
+                }
+            }
+
+            function loadDoughnutChart() {
+                var selected = $('#selectedDoughnut').val();
+                $.ajax({
+                    url: '/StatisticsManage/LoadDoughnutChart?selected=' + selected,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        resetChartDoughnut();
+                        appendCanvasDoughnut();
+                        updateDoughnutChart(data);
+                    }
+                });
+            }
+
+            function updateDoughnutChart(list) {
+                var ctxPie = document.getElementById('doughnutChart').getContext('2d');
+                var titles = [];
+                var total = [];
+                var colors = [];
+
+                function getRandomColor() {
+                    var letters = '0123456789ABCDEF';
+                    var color = '#';
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                list.forEach(function (item) {
+                    titles.push(item.movieName);
+                    total.push(item.percenTicketSold)
+                    colors.push(getRandomColor())
+                });
+
+                myDoughnutChart = new Chart(ctxPie, {
+                    type: 'doughnut',
+                    data: {
+                        labels: titles,
+                        datasets: [{
+                            label: 'Phần trăm số vé bán được mỗi phim',
+                            data: total,
+                            backgroundColor: colors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+
+
+
+            //-------------------Bar chart-----------------------------
+            function appendCanvas() {
+                $('#barChart').remove();
+                $('#viewBarChar').append('<canvas id="barChart"></canvas>');
+            }
+
+            function resetChart() {
+                if (myChart) {
+                    myChart.destroy();
+                }
+            }
+
+            function loadBarChart() {
+                var selected = $('#selected').val();
+                $.ajax({
+                    url: '/StatisticsManage/LoadBarChart?selected=' + selected,
+                    type: 'GET',
+                    success: function (data) {
+                        console.log(data);
+                        resetChart();
+                        appendCanvas();
+                        updateBarChart(data);
+                    }
+                });
+            }
+
+            function updateBarChart(list) {
+                var ctx = document.getElementById('barChart').getContext('2d');
+                var month = [];
+                var total = [];
+                var colors = [];
+
+                function getRandomColor() {
+                    var letters = '0123456789ABCDEF';
+                    var color = '#';
+                    for (var i = 0; i < 6; i++) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    return color;
+                }
+
+                list.forEach(function (item) {
+                    month.push(item.month);
+                    total.push(item.totalAmount)
+                    colors.push(getRandomColor())
+                });
+
+                myChar = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: month,
+                        datasets: [{
+                            label: 'Doanh thu trong mỗi tháng (VND)',
+                            data: total,
+                            backgroundColor: colors,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+        </script>
+    }
+</main>

@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Cinema.ViewModel.EmployeeViewModel>
+<partial name="_Notification" />
+@{
+    ViewData["Title"] = "Index";
+
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+
+<div class= "container">
+    <div class="row pt-4 pb-2">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Danh sách nhân viên
+            </h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Employee" asp-action="Create" class="btn btn-primary">
+                Thêm nhân viên mới
+            </a>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Vị trí
+            </th>
+            <th>
+                Họ tên
+            </th>
+            <th>
+                Ngày sinh
+            </th>
+            <th>
+                Điện thoại
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Địa chỉ
+            </th>
+            <th>
+                Giới tính
+            </th>
+            <th>
+                Đảm nhiệm
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+           
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Position)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @item.DateOfBirth.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AccountTypeName)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EmployeeId"><i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                    </td>
+                </tr>
+            
+        }
+    </tbody>
+</table>

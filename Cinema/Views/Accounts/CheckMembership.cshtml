@@ -1,0 +1,99 @@
+﻿@model Cinema.Models.Customer
+
+@{
+    ViewData["Title"] = "CheckMembership";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .menu {
+        border: 1px solid #F26A6A;
+        text-align: center;
+        width: 7cm;
+        border-radius: 10px;
+    }
+
+    h3 {
+        border-bottom: 1px solid #F26A6A;
+        margin-bottom: 0px;
+        height: 1.4cm;
+    }
+
+    .menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+        .menu ul .in1 {
+            border-bottom: 1px solid #F26A6A;
+            height: 1.2cm;
+            padding-top: 10px;
+        }
+
+        .menu ul .in2 {
+            height: 1.2cm;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+        }
+
+        .menu ul a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu ul .in1 a {
+            padding-top: 10px;
+        }
+
+        .menu ul .in1:hover, .in2:hover {
+            background-color: #F26A6A;
+            color: white;
+        }
+
+    .form-group {
+        margin-top: 20px;
+        margin-left: 40%;
+    }
+
+        .form-group input {
+            width: 3cm;
+        }
+</style>
+
+<h1>CheckMembership</h1>
+
+<div class="container">
+    <h4>Customer</h4>
+    <hr />
+    <div class="row">
+        <div class="col-4">
+            <div class="menu">
+                <h3 style="line-height:50px;">TÀI KHOẢN</h3>
+                <ul>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="Edit">THÔNG TIN TÀI KHOẢN</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="ChangePass">THAY ĐỔI MẬT KHẨU</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="CheckMembership">THÔNG TIN THẺ THÀNH VIÊN</a></li>
+                    <li class="in2"><a href="#">LỊCH SỬ GIAO DỊCH ONLINE</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div style="background-color:#7e8eaa;text-align:center;color:white;height:1cm;font-weight:500;line-height:35px;">THÔNG TIN TÀI KHOẢN</div>
+            <form asp-action="CheckMembership">
+                <input type="hidden" asp-for="AccId" />
+                <div>
+                    @if (ViewBag.Displaymembership != null)
+                    {
+                        <div>
+                            @ViewBag.Displaymembership
+                        </div>
+                    }
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+

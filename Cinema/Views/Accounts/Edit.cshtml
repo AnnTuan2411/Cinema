@@ -1,0 +1,146 @@
+﻿@model Cinema.Models.Account
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #8e640a;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .menu {
+        border: 1px solid #F26A6A;
+        text-align: center;
+        width: 7cm;
+        border-radius: 10px;
+    }
+
+    h3 {
+        border-bottom: 1px solid #F26A6A;
+        margin-bottom: 0px;
+        height: 1.4cm;
+    }
+
+    .menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+        .menu ul .in1 {
+            border-bottom: 1px solid #F26A6A;
+            height: 1.2cm;
+            padding-top: 10px;
+        }
+
+        .menu ul .in2 {
+            height: 1.2cm;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+        }
+
+        .menu ul a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu ul .in1 a {
+            padding-top: 10px;
+        }
+
+        .menu ul .in1:hover, .in2:hover {
+            background-color: #F26A6A;
+            color: white;
+        }
+
+    .form-group {
+        margin-top: 20px;
+        margin-left: 40%;
+    }
+
+        .form-group input {
+            width: 3cm;
+        }
+</style>
+<div class="container">
+    <hr />
+    <div class="row">
+        <div class="col-4">
+            <div class="menu">
+                <h3 style="line-height:50px;">TÀI KHOẢN</h3>
+                <ul>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="Edit">THÔNG TIN TÀI KHOẢN</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="ChangePass">THAY ĐỔI MẬT KHẨU</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Customers" asp-action="Details">THÔNG TIN THẺ THÀNH VIÊN</a></li>
+                    <li class="in2"><a href="#">LỊCH SỬ GIAO DỊCH ONLINE</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div style="background-color:#7e8eaa;text-align:center;color:white;height:1cm;font-weight:500;line-height:35px;">THÔNG TIN TÀI KHOẢN</div>
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AccId" />
+                <div class="row" style="margin-top:10px">
+                    <div class="col-md-6">
+                        <label>Họ Và Tên</label>
+                        <input asp-for="FullName" class="form-control" readonly />
+
+                    </div>
+                    <div class="col-md-6">
+                        <label>Giới tính</label><br />
+                        <label>
+                            <input type="radio" asp-for="Gender" value="Nam" /> Nam
+                        </label>
+                        <label>
+                            <input type="radio" asp-for="Gender" value="Nữ" /> Nữ
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Ngày sinh</label>
+                        <input asp-for="DateOfBirth" class="form-control" type="date" readonly />
+
+                    </div>
+                    <div class="col-md-6">
+                        <label>Số điện thoại</label>
+                        <input asp-for="Phone" class="form-control" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly />
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Chỉnh sửa" class="btn btn-outline-danger" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

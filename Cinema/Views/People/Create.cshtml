@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div class="container">
+<h1>Create</h1>
+
+<form action="/People/Create/" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="Col-8">
+            <label for="PersonName">Name</label>
+            <input type="text" class="form-control" id="PersonName" name="PersonName" placeholder="Name" />
+            <label for="BirthDate">Date of birth</label>
+            <input type="date" class="form-control" id="BirthDate" name="BirthDate" />
+            <label for="IMAGE">Image</label>
+            <input type="file" class="form-control" id="IMAGE" name="IMAGE" accept="image/*" />
+            <label for="WikipediaURL">Wikipedia URL</label>
+            <input type="text" class="form-control" id="WikipediaUrl" name="WikipediaUrl" />
+            <lable for="Information">Information</lable>
+            <textarea id="Information" name="Information" class="form-control" placeholder="..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+        <a class="btn btn-danger" href="/home/Index">Cancel</a>
+    </div>
+</form>
+</div>
+
+

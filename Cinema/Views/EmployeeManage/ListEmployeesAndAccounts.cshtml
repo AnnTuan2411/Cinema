@@ -1,0 +1,119 @@
+﻿@model X.PagedList.IPagedList<Cinema.Models.Employee>
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@{
+    ViewData["Title"] = "ListEmployeesAndAccounts";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+<div id="PlaceHolderHere"></div>
+<main class="content ">
+    <h1 class="h3 mb-3"><strong>Danh sách nhân viên</strong></h1>
+    <div class="container-fluid p-0">
+        <div class="row">
+            <div class="col-12 col-lg-8 col-xxl-12 d-flex">
+                <!-- col-xxl-9 -->
+                <div class="card flex-fill">
+                    <div class="card-header">
+                        @using (Html.BeginForm("ListEmployeesAndAccounts", "EmployeeManage", FormMethod.Get))
+                        {
+                            <div class="float-end">
+                                <input type="text" name="strSearch" placeholder="Tìm kiếm nhân viên" />
+                                <input class="btn btn-primary" type="submit" value="Tìm kiếm" />
+                            </div>
+                        }
+                    </div>
+
+                    <table class="table table-hover my-0">
+                        <thead>
+                            <tr>
+                                <th>ID nhân viên</th>
+                                <th>Họ và tên</th>
+                                <th>Chức vụ</th>
+                                <th>Số điện thoại</th>
+                                <th>Email</th>
+                                <th>Trạng thái</th>
+                                <th class="text-center">Chức năng</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.EmployeeId)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Acc.FullName)
+                                    </td>
+                                    <td>
+                                        @if (item.Position.Contains("NV"))
+                                        {
+                                            <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Position)</span>
+                                        }
+                                        else if (item.Position.Contains("QL"))
+                                        {
+                                            <span class="badge bg-success">@Html.DisplayFor(modelItem => item.Position)</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">@Html.DisplayFor(modelItem => item.Position)</span>
+                                        }
+
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Acc.Phone)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Acc.Email)
+                                    </td>
+                                    <td>
+                                        @if (item.Acc.Status == 1)
+                                        {
+                                            <span class="badge bg-primary">Làm việc</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Nghỉ việc</span>
+                                        }
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a class="btn btn-primary" style="text-decoration: none" asp-action="Edit" asp-route-id="@item.EmployeeId">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-info" style="text-decoration: none" asp-action="Details" asp-route-id="@item.EmployeeId">
+                                            <i class="fa-solid fa-circle-info"></i>
+                                        </a>
+                                        @if (item.Acc.Status == 1)
+                                        {
+                                            <button type="button" class="btn btn-danger" data-toggle="ajax-modal" data-target="#disableEmp" data-url="@Url.Action($"DisableEmp/{item.EmployeeId}")">
+                                                <i class="fa-regular fa-hand"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-success" data-toggle="ajax-modal" data-target="#enableEmpModal" data-url="@Url.Action($"EnableEmp/{item.EmployeeId}")">
+                                                <i class="fa-regular fa-circle-check"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div>
+                @Html.PagedListPager(Model, page => Url.Action("ListEmployeesAndAccounts", "EmployeeManage",
+                new { page = page }),
+                new PagedListRenderOptions
+                {
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new string[] { "page-link" }
+                })
+            </div>
+        </div>
+    </div>
+</main>
+

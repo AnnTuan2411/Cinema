@@ -1,0 +1,147 @@
+﻿@model Cinema.Models.Account
+
+@{
+    ViewData["Title"] = "ChangePass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .alert {
+        padding: 20px;
+        margin-bottom: 15px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: #8e640a;
+        font-weight: bold;
+        float: right;
+        font-size: 22px;
+        line-height: 20px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .closebtn:hover {
+            color: black;
+        }
+
+    .menu {
+        border: 1px solid #F26A6A;
+        text-align: center;
+        width: 7cm;
+        border-radius: 10px;
+    }
+
+    h3 {
+        border-bottom: 1px solid #F26A6A;
+        margin-bottom: 0px;
+        height: 1.4cm;
+    }
+
+    .menu ul {
+        list-style: none;
+        padding-left: 0px;
+        margin-bottom: 0px;
+    }
+
+        .menu ul .in1 {
+            border-bottom: 1px solid #F26A6A;
+            height: 1.2cm;
+            padding-top: 10px;
+        }
+
+        .menu ul .in2 {
+            height: 1.2cm;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-top: 10px;
+        }
+
+        .menu ul a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .menu ul .in1 a {
+            padding-top: 10px;
+        }
+
+        .menu ul .in1:hover, .in2:hover {
+            background-color: #F26A6A;
+            color: white;
+        }
+
+    .form-group {
+        margin-top: 20px;
+        margin-left: 40%;
+    }
+
+        .form-group input {
+            width: 3cm;
+        }
+</style>
+<div class="container">
+    <hr />
+    @if (ViewBag.ChangePassFail != null)
+    {
+        <div id="ErrorMsg" class="alert alert-warning alert-dismissible">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            @ViewBag.ChangePassFail
+        </div>
+    }
+    @if (ViewBag.ConfirmPass != null)
+    {
+        <div id="ErrorMsg" class="alert alert-warning alert-dismissible">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            @ViewBag.ConfirmPass
+        </div>
+    }
+    <div class="row">
+        <div class="col-4">
+            <div class="menu">
+                <h3 style="line-height:50px;">TÀI KHOẢN</h3>
+                <ul>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="Edit">THÔNG TIN TÀI KHOẢN</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Accounts" asp-action="ChangePass">THAY ĐỔI MẬT KHẨU</a></li>
+                    <li class="in1"><a asp-route-id="@ViewBag.SessionID" asp-controller="Customers" asp-action="Details">THÔNG TIN THẺ THÀNH VIÊN</a></li>
+                    <li class="in2"><a href="#">LỊCH SỬ GIAO DỊCH ONLINE</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-8">
+            <div style="background-color:#7e8eaa;text-align:center;color:white;height:1cm;font-weight:500;line-height:35px;">THAY ĐỔI MẬT KHẨU</div>
+            <form asp-action="ChangePass">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="AccId" />
+                <div class="row" style="margin-top:10px">
+                    <div class="col-md-6">
+                        <label>Mật khẩu cũ</label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Mật khẩu mới</label>
+                        <input id="NewPass" name="NewPass" class="form-control" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label> Nhập lại Mật khẩu mới</label>
+                        <input id="ConfirmNewPass" name="ConfirmNewPass" class="form-control" type="password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Chỉnh sửa" class="btn btn-outline-danger" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+
